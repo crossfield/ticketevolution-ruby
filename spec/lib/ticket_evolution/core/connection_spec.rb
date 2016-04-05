@@ -8,7 +8,8 @@ describe TicketEvolution::Connection do
       :version => klass.oldest_version_in_service,
       :mode => :sandbox,
       :ssl_verify => true,
-      :logger => nil
+      :logger => nil,
+      :test_responses => false
     })
   end
   let(:basic_options) do
@@ -71,7 +72,7 @@ describe TicketEvolution::Connection do
         it "sets the request object to ssl verify false" do
           connection = klass.new(options)
           request = connection.build_request(:GET, '/')
-          request.ssl[:verify].should be_false
+          request.ssl[:verify].should be false
         end
       end
 
@@ -84,7 +85,7 @@ describe TicketEvolution::Connection do
         it "sets the request object to ssl verify true" do
           connection = klass.new(options)
           request = connection.build_request(:GET, '/')
-          request.ssl[:verify].should be_true
+          request.ssl[:verify].should be true
         end
       end
     end
@@ -307,8 +308,8 @@ describe TicketEvolution::Connection do
           "Accept" => "application/vnd.ticketevolution.api+json; version=#{valid_options[:version]}",
           "X-Signature" => "8eaaqg6d4DJ2SEWkCvkdhc05dITmpNbUrcbN75UBGMA=",
           "X-Token" => valid_options[:token],
-          "Content-Type" => "application/json"
-
+          "Content-Type" => "application/json",
+          "User-Agent" => "Faraday v#{Faraday::VERSION}"
         }
       end
       subject { klass.new(req_options).build_request(:GET, '/test', params) }
@@ -321,7 +322,8 @@ describe TicketEvolution::Connection do
         {
           "X-Signature" => "YbwEmJL9P0hvpplEr2q2iL4Mpz+KevHUOjzgYh0ewh4=",
           "X-Token" => valid_options[:token],
-          "Content-Type" => "application/json"
+          "Content-Type" => "application/json",
+          "User-Agent" => "Faraday v#{Faraday::VERSION}"
         }
       end
       subject { klass.new(req_options.merge(:version => 9)).build_request(:GET, '/test', params) }

@@ -45,27 +45,20 @@ shared_examples_for "a parental model" do
 
   describe "#new_ostruct_member" do
     context "when the member name refers to an endpoint" do
-      before do
-        instance.samples = []
-      end
-
       it "should respond with the value" do
+        instance.samples = []
         instance.samples.should == []
       end
 
       it "should fall back on the endpoint" do
-        sample_klass.any_instance.should_receive(:send).with(:testing)
-
+        sample_klass.any_instance.should_receive(:testing)
         instance.samples.testing
       end
     end
 
     context "when the member name does not refer to an endpoint" do
-      before do
-        instance.not_samples = []
-      end
-
       it "should respond with the value" do
+        instance.not_samples = []
         instance.not_samples.should == []
       end
 

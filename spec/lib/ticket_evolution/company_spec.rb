@@ -15,7 +15,7 @@ describe TicketEvolution::Company do
 
       it "destroy the instance" do
         response = company.destroy
-        response.should be_true
+        response.should be_truthy
 
         same_company = connection.companies.find(company.id)
         same_company.should be_instance_of(TicketEvolution::ApiError)

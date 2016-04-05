@@ -71,7 +71,7 @@ shared_examples_for "an update endpoint" do
         :last_name => "Doe"
       })) }
       let(:params) { {:first_name => "Bob"} }
-      let(:response) { mock(:response, :attributes => params) }
+      let(:response) { double(:response, :attributes => params) }
 
       it "should pass call request as a PUT, passing params" do
         klass.any_instance.should_receive(:request).with(:PUT, nil, params).and_return(response)
@@ -92,7 +92,7 @@ shared_examples_for "an update endpoint" do
         data.delete(:id)
         data
       end
-      let(:response) { mock(:response, :attributes => {}) }
+      let(:response) { double(:response, :attributes => {}) }
 
       it "should pass call request as a PUT, passing params" do
         klass.any_instance.should_receive(:request).with(:PUT, nil, expected).and_return(response)

@@ -10,6 +10,7 @@ require 'openssl'
 require 'pathname'
 require 'cgi'
 
+require 'active_support/deprecation'
 require 'active_support/hash_with_indifferent_access'
 require 'active_support/version'
 require 'active_support/core_ext/class'

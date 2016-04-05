@@ -241,7 +241,7 @@ shared_examples_for "a ticket_evolution endpoint class" do
     let(:instance) { klass.new({:parent => connection}) }
     let(:full_path) { "#{instance.base_path}#{path}" }
     let(:response_code) { 200 }
-    let(:response) { mock(:response, {
+    let(:response) { double(:response, {
       :headers => {},
       :status => response_code,
       :body => body_str
