@@ -13,8 +13,9 @@ module TicketEvolution
 
       response.body['results'].each do |result|
         type = result['_type'] =~ /order|purchase/i ? "Order" : result['_type']
-        collection.entries << "TicketEvolution::#{type}".
-        constantize.new(result.merge({:connection => connection}))
+        collection.entries << TicketEvolution.lookup_const!(
+          "TicketEvolution::#{type}"
+        ).new(result.merge({:connection => connection}))
       end
 
       collection

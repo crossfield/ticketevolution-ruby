@@ -16,8 +16,9 @@ module TicketEvolution
       )
 
       response.body['settings'].each do |result|
-        collection.entries << "TicketEvolution::ShippingSetting".
-          constantize.new(result.merge({:connection => connection}))
+        collection.entries << TicketEvolution::ShippingSetting.new(
+          result.merge({:connection => connection})
+        )
       end
 
       collection
@@ -33,8 +34,10 @@ module TicketEvolution
       )
 
       response.body['settings'].each do |result|
-        collection.entries << "TicketEvolution::ServiceFee".
-          constantize.new(result.merge({:connection => connection}))
+
+        collection.entries << TicketEvolution::ServiceFee.new(
+          result.merge({:connection => connection})
+        )
       end
 
       collection

@@ -91,9 +91,9 @@ describe TicketEvolution::Model do
 
   describe "#plural_class" do
     let(:plural_class_name) { "TicketEvolution::Models" }
-    it "call #constantize on the result of #plural_class_name" do
+    it "calls TicketEvolution.lookup_const! on the result of #plural_class_name" do
       instance.should_receive(:plural_class_name).and_return(plural_class_name)
-      plural_class_name.should_receive(:constantize)
+      TicketEvolution.should_receive(:lookup_const!).with(plural_class_name)
       instance.plural_class
     end
   end

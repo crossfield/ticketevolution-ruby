@@ -25,10 +25,30 @@ require 'ext/faraday/utils'
 
 require 'faraday/response/verbose_logger'
 
+require 'thread_safe'
+
 module TicketEvolution
   mattr_reader :root
-
   @@root = Pathname.new(File.dirname(File.expand_path(__FILE__))) + 'ticket_evolution'
+
+  mattr_reader :const_cache
+  @@const_cache = ThreadSafe::Cache.new
+
+  def self.lookup_const(name)
+    const_cache.fetch(name) { |key|
+      const = begin
+        name.constantize
+      rescue
+        nil
+      end
+
+      const_cache[key] = const
+    }
+  end
+
+  def self.lookup_const!(name)
+    lookup_const(name) || raise("Const not found: #{name}")
+  end
 end
 
 c = Module.new { def self.req(*parts); require TicketEvolution.root + 'core' + File.join(parts); end }

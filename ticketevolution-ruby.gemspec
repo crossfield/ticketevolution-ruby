@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'yajl-ruby', '>= 0.7.7'
   s.add_dependency 'multi_json', '>= 0.0.4'
   s.add_dependency 'nokogiri', '>= 1.4.3'
+  s.add_dependency 'thread_safe'
 
   s.add_development_dependency 'rspec', '>= 2.7.1'
   s.add_development_dependency 'rspec-its'

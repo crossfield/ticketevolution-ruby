@@ -1,7 +1,7 @@
 module TicketEvolution
   module SingularClass
     def singular_class(klass = self.class)
-      "TicketEvolution::#{(klass.is_a?(String) ? klass : klass.name).demodulize.singularize.camelize}".constantize
+      TicketEvolution.lookup_const!("TicketEvolution::#{(klass.is_a?(String) ? klass : klass.name).demodulize.singularize.camelize}")
     end
   end
 end

@@ -6,6 +6,7 @@ PATH
       faraday (= 0.8.8)
       multi_json (>= 0.0.4)
       nokogiri (>= 1.4.3)
+      thread_safe
       yajl-ruby (>= 0.7.7)
 
 GEM

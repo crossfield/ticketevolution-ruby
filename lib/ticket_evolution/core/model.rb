@@ -16,7 +16,7 @@ module TicketEvolution
     end
 
     def plural_class
-      self.plural_class_name.constantize rescue nil
+      TicketEvolution.lookup_const!(plural_class_name)
     end
 
     def attributes
@@ -43,7 +43,9 @@ module TicketEvolution
 
     def endpoint
       parent = if scope.present?
-        scope[:class].constantize.new(:parent => @connection, :id => scope[:id])
+        TicketEvolution.lookup_const!(
+          scope[:class]
+        ).new(:parent => @connection, :id => scope[:id])
       else
         @connection
       end
@@ -62,10 +64,11 @@ module TicketEvolution
     end
 
     def method_missing(method, *args)
-      begin
-        method = method.to_s.gsub("_endpoint", "") if method.to_s.end_with? "_endpoint"
-        "#{plural_class_name}::#{method.to_s.camelize}".constantize.new(:parent => plural_class.new(:parent => @connection, :id => self.id))
-      rescue
+      method = method.to_s.gsub("_endpoint", "") if method.to_s.end_with? "_endpoint"
+
+      if const = TicketEvolution.lookup_const("#{plural_class_name}::#{method.to_s.camelize}")
+        const.new(:parent => plural_class.new(:parent => @connection, :id => self.id))
+      else
         super
       end
     end
