@@ -64,9 +64,7 @@ module TicketEvolution
     end
 
     def datum_exists?(name)
-      # This code always returned true, so optimizing it by hardcoding true.
-      # defined?(name.constantize) and defined?(singular_class(name.constantize))
-      true
+      defined?(name.constantize) and defined?(singular_class(name.constantize))
     end
 
     def class_name_from_url(url)
