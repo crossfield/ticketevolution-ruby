@@ -1,5 +1,9 @@
 module TicketEvolution
   class Endpoint < Base
+    def self.inherited(subclass)
+      TicketEvolution.const_cache.put(subclass.to_s, subclass)
+    end
+
     include RequestHandler
     include SingularClass
 

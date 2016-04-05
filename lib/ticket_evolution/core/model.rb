@@ -1,5 +1,9 @@
 module TicketEvolution
   class Model < Builder
+    def self.inherited(subclass)
+      TicketEvolution.const_cache.put(subclass.to_s, subclass)
+    end
+
     def initialize(params = {})
       @connection = params.delete(:connection)
       raise TicketEvolution::ConnectionNotFound.new \
