@@ -3,6 +3,5 @@
 *.swo
 pkg
 .rvmrc
-Gemfile.lock
 TODO
 
