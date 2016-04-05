@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'nokogiri', '>= 1.4.3'
 
   s.add_development_dependency 'rspec', '>= 2.7.1'
+  s.add_development_dependency 'rspec-its'
   s.add_development_dependency 'vcr', '< 2'
   s.add_development_dependency 'webmock', '>= 1.7.0', '< 1.8.0'
   s.add_development_dependency 'awesome_print'

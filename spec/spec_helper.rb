@@ -1,4 +1,5 @@
 require "ap"
+require 'rspec/its'
 require File.join(File.dirname(File.expand_path(__FILE__)), '..', 'lib', 'ticket_evolution.rb')
 require 'active_support/ordered_hash' unless RUBY_VERSION =~ /^1\.9/
 
