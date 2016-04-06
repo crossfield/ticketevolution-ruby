@@ -64,7 +64,10 @@ module TicketEvolution
     end
 
     def datum_exists?(name)
-      defined?(name.constantize) and defined?(singular_class(name.constantize))
+      # This code always returned truthy value if given a string, so it's the
+      # same as returning its argument.
+      # defined?(name.constantize) and defined?(singular_class(name.constantize))
+      name
     end
 
     def class_name_from_url(url)
