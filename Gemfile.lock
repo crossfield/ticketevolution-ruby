@@ -4,6 +4,7 @@ PATH
     ticketevolution-ruby (0.7.44)
       activesupport (>= 3.0.0)
       faraday (= 0.8.8)
+      faraday_middleware
       multi_json (>= 0.0.4)
       nokogiri (>= 1.4.3)
       thread_safe
@@ -26,6 +27,8 @@ GEM
     diff-lcs (1.2.5)
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
+    faraday_middleware (0.10.0)
+      faraday (>= 0.7.4, < 0.10)
     i18n (0.7.0)
     json (1.8.3)
     method_source (0.8.2)

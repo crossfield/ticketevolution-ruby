@@ -7,7 +7,7 @@ module TicketEvolution
     DEFAULT_PROTOCOL  = 'https'
 
     cattr_reader :default_options, :expected_options, :oldest_version_in_service
-    cattr_accessor :protocol, :subdomain, :url_base, :adapter
+    cattr_accessor :protocol, :subdomain, :url_base, :adapter, :cache_options
 
     @@oldest_version_in_service = 8
 
@@ -34,9 +34,11 @@ module TicketEvolution
     @@protocol  = DEFAULT_PROTOCOL
 
     @@adapter = :net_http
+    @@cache_options = {}
 
     def initialize(opts = {})
       @adapter = self.class.adapter
+      @cache_options = self.class.cache_options
       @config = self.class.default_options.merge(opts)
       @config.delete_if{|k, v| ! TicketEvolution::Connection.expected_options.include?(k)}
 
@@ -95,6 +97,7 @@ module TicketEvolution
       options[:params] = params if method == :GET
       options[:headers]["Accept"] = "application/vnd.ticketevolution.api+json; version=#{@config[:version]}" unless @config[:version] > 8
       Faraday.new(self.uri(path), options) do |builder|
+        builder.use FaradayMiddleware::Caching, @cache_options[:store], @cache_options if !@cache_options.empty?
         builder.use Faraday::Response::VerboseLogger, self.logger if self.logger.present?
         builder.use FaradayLocalhostHeader, [ /(?:^|\.)lvh\.me$/i, /(?:^|\.)((?:\d+\.){4})xip\.io$/i ]
         builder.adapter @adapter

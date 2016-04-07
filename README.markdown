@@ -68,6 +68,18 @@ Behind the scenes we use [Faraday](https://github.com/technoweenie/faraday) with
 
     TicketEvolution::Connection.adapter = :typhoeus
 
+**Caching**
+
+API responses can be cached using your favorite caching backend. To enable this, set `cache_options` on the connection class __before__ you instantiate your connection object. For example, in Rails you could set it to any available backend.
+
+    TicketEvolution::Connection.cache_options = {
+      store: ActiveSupport::Cache::MemoryStore.new(expires_in: 30.minutes)
+    }
+
+Note the global `expires_in` setting on the cache object. It is the only way to control how long the cached data should be stored. Without this setting requests would be stored forever, or until cache is cleared manually.
+
+Remaining cache options are passed directly to [`FaradayMiddleware::Caching`](https://github.com/lostisland/faraday_middleware/wiki/Caching). Follow the link to find out what they do.
+
 **Endpoint objects**
 
 These are always (except in the case of Search) pluralized class names and match the endpoints listed at [http://developer.ticketevolution.com](http://developer.ticketevolution.com/). To instantiate an endpoint instance, create a connection object and then call the endpoints name, underscored, as a method on the connection object.

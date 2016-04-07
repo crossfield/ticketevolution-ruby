@@ -24,6 +24,7 @@ require 'ext/hash'
 require 'ext/faraday/utils'
 
 require 'faraday/response/verbose_logger'
+require 'faraday_middleware/response/caching'
 
 require 'thread_safe'
 
